@@ -55,13 +55,14 @@ public class Server {
 
         try {
             serverSocket = new ServerSocket(SERVER_PORT_NUMBER);
-
+            System.out.println("Server has started.");
             int clientNumber = 0;  // a number sequentially allocated to each new client (for identification purposes here)
 
             while (true) {
+                System.out.println("Server: Listening/waiting for connections on port ..." + SERVER_PORT_NUMBER);
                 clientSocket = serverSocket.accept();
                 clientNumber++;
-                System.out.println("Server: Server started. Listening for connections on port ..." + SERVER_PORT_NUMBER);
+                System.out.println("Server: Listening for connections on port ..." + SERVER_PORT_NUMBER);
 
                 System.out.println("Server: Client " + clientNumber + " has connected.");
                 System.out.println("Server: Port number of remote client: " + clientSocket.getPort());
@@ -73,7 +74,7 @@ public class Server {
                 t.start();
 
                 System.out.println("Server: ClientHandler started in thread " + t.getName() + " for client " + clientNumber + ". ");
-                System.out.println("Server: Listening for further connections...");
+
             }
         } catch (IOException ex) {
             System.out.println(ex);
@@ -143,7 +144,7 @@ class ClientHandler implements Runnable   // each ClientHandler communicates wit
                 } else if (request.startsWith("quit"))
                 {
                     socketWriter.println("Sorry to see you leaving. Goodbye.");
-                    System.out.println("Server message: Invalid request from client.");
+                    System.out.println("Server message: Client has notified us that it is quitting.");
                 }
                 else{
                     socketWriter.println("error I'm sorry I don't understand your request");
