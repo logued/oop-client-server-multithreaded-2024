@@ -1,7 +1,7 @@
 package multithreaded;
 
 /**
- * CLIENT                                                  Mar 2024
+ * CLIENT                                                  Mar 2025
  * <p>
  * This Client program asks the user to input commands to be sent to the server.
  * There are only two valid commands in the protocol: "Time" and "Echo"
