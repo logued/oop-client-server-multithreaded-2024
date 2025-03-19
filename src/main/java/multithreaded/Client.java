@@ -7,7 +7,8 @@ package multithreaded;
  * If user types "time" then the string "time" is sent to the server,
  * and the server will respond by getting the current time and sending it back to the client.
  * -
- * If the user types "echo" followed by a space and a message, the server will echo back the message back to the client.
+ * If the user types "echo" followed by a space and a message, the server will echo
+ * original message back to the client.
  * e.g. "echo Hi Tom"     -  will cause the server to respond with "Hi Tom"
  * -
  * If the user enters any other input, the server will not understand, and
@@ -27,7 +28,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    final static int SERVER_PORT_NUMBER = 8888;
+    final static int SERVER_PORT_NUMBER = 49000;
 
     public static void main(String[] args) {
         Client client = new Client();
@@ -36,7 +37,7 @@ public class Client {
 
     public void start() {
 
-        try (   // Attempt to establish a connection with the server, and if successful
+        try (   // Attempt to establish a connection with the server and, if successful,
                 // create a Socket for communication.
                 Socket socket = new Socket("localhost", SERVER_PORT_NUMBER);
 
@@ -45,18 +46,18 @@ public class Client {
                 BufferedReader socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ) {
             System.out.println("Client message: The Client is running and has connected to the server");
-            //ask user to enter a command
+            // ask user to enter a command
             Scanner userInput = new Scanner(System.in);
             System.out.println("Valid commands are: \"time\" to get time, or \"echo <message>\" to get message echoed back, \"quit\"");
-            System.out.println("Please enter a command: ");
+            System.out.print("Please enter a command: ");
             String userRequest = userInput.nextLine();
 
             while(true) {
                 // send the command to the server on the socket
-                socketWriter.println(userRequest);      // write the request to socket along with a newline terminator (which is required)
+                socketWriter.println(userRequest);    // write the user's request to socket along with a newline terminator (which is required) (it is included by println() )
                 // out.flush();                      // flushing buffer NOT necessary as auto flush is set to true
 
-                // process the answer returned by the server
+                // based on the request sent, process the answer returned by the server
                 //
                 if (userRequest.startsWith("time"))   // if user asked for "time", we expect the server to return a time (in milliseconds)
                 {
@@ -87,10 +88,11 @@ public class Client {
             System.out.println("Client message: IOException: " + e);
         }
         // sockets and streams are closed automatically due to try-with-resources
-        // so no finally block required here.
+        // so no finally block is required here.
 
         System.out.println("Exiting client, but server may still be running.");
     }
 }
 
-//  LocalTime time = LocalTime.parse(timeString); // Parse String -> convert to LocalTime object if required LocalTime.parse(timeString); // Parse timeString -> convert to LocalTime object if required
+// LocalTime time = LocalTime.parse(timeString);
+// Parse String -> convert to LocalTime object if required

@@ -5,27 +5,30 @@ package multithreaded;
  * -
  * This Server accepts multiple client connections.
  * -
- * For each connection accepted by the server, a new ClientHandler object is created to handle
+ * For each connection accepted by the server, a new ClientHandler INSTANCE (object) is created to handle
  * the communications with that Client. The ClientHandler is initialized on
- * construction with the socket created to communicate with the client.
- * The ClientHandler implements the Runnable interface, (it is a Runnable).
- * The server then passes the client handler into a new Thread, and ClientHandler
- * run() method runs in the thread and continues to independently communicate with
+ * construction with the socket that was created to communicate with the client.
+ * The ClientHandler class implements the Runnable interface, (it is a Runnable).
+ * The server then passes the ClientHandler into a new Thread, and the ClientHandler
+ * run() method executes in the thread and continues to independently communicate with
  * the client.
  * -
  * The server uses the client handler to process requests from clients, and
  * sends appropriate responses back to the client.
  * -
  * The following PROTOCOL is implemented:
- * If ( the Server receives the request "time", from a Client ) then : the
- * server will send back the current time.
+ * If ( the Server receives the request "time", from a Client ) then :
+ *      the server will send back the current time.
  * If ( the Server receives the request "echo message", from a Client ) then :
- * the server will send back the message.
+ *      the server will send back the original message.
  * If ( the Server receives the request it does not recognize ) then : the
  * server will send back the message "Sorry, I don't understand".
- * If server receives "quit" then it terminates.
+ * If ( the server receives "quit" then )
+ *      the app is terminated.
+ * If the client disconnects, then the ClientHandler will be terminated.
+ *
  * This is an example of a simple protocol, where the server's response is based
- * only on  the client's request.
+ * only on the client's request.
  * -
  * Each client is handled by a ClientHandler running in a separate worker Thread.
  * Because the thread runs independently, the server code continues to execute
@@ -42,7 +45,7 @@ import java.time.LocalTime;
 
 public class Server {
 
-    final int SERVER_PORT_NUMBER = 8888;  // could be any port from 1024 to 49151 (that doesn't clash with other Apps)
+    final int SERVER_PORT_NUMBER = 49000;  // could be any port from 1024 to 49151 (that doesn't clash with other Apps)
 
     public static void main(String[] args) {
         Server server = new Server();
