@@ -1,31 +1,32 @@
 package multithreaded;
 
 /**
- * MULTI-THREADED SERVER                                         March 2024
- * <p>
- * This Server accepts multiple client connections and manages a connection
- * with each client using a Thread per client. There is only one server.
- * For each connection accepted, a new ClientHandler object is created to handle
+ * MULTI-THREADED SERVER                                         March 2025
+ * -
+ * This Server accepts multiple client connections.
+ * -
+ * For each connection accepted by the server, a new ClientHandler object is created to handle
  * the communications with that Client. The ClientHandler is initialized on
  * construction with the socket created to communicate with the client.
- * The ClientHandler implements the Runnable interface, (it is a Runnable)
+ * The ClientHandler implements the Runnable interface, (it is a Runnable).
  * The server then passes the client handler into a new Thread, and ClientHandler
  * run() method runs in the thread and continues to independently communicate with
  * the client.
- * <p>
+ * -
  * The server uses the client handler to process requests from clients, and
  * sends appropriate responses back to the client.
- * <p>
+ * -
  * The following PROTOCOL is implemented:
- * If ( the Server receives the request "Time", from a Client ) then : the
+ * If ( the Server receives the request "time", from a Client ) then : the
  * server will send back the current time.
- * If ( the Server receives the request "Echo message", from a Client ) then :
+ * If ( the Server receives the request "echo message", from a Client ) then :
  * the server will send back the message.
  * If ( the Server receives the request it does not recognize ) then : the
  * server will send back the message "Sorry, I don't understand".
+ * If server receives "quit" then it terminates.
  * This is an example of a simple protocol, where the server's response is based
  * only on  the client's request.
- * <p>
+ * -
  * Each client is handled by a ClientHandler running in a separate worker Thread.
  * Because the thread runs independently, the server code continues to execute
  * and continually listens for new client requests and create handlers for those clients.
